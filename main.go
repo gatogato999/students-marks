@@ -7,13 +7,17 @@ import (
 
 func Check(err error) {
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 }
 
 func main() {
 	mux := http.NewServeMux()
-	mux.HandleFunc(" /mark/home", HomeHanlder)
+	mux.HandleFunc(" /mark/add", InsertMarkHandler)
+	mux.HandleFunc(" /mark/show", ShowMarkHandler)
+	mux.HandleFunc(" /mark/login", LoginPage)
+	mux.HandleFunc(" /mark/auth", LoginHandler)
+	mux.Handle("static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 	if err := http.ListenAndServe(":10055", mux); err != nil {
 		panic(err)

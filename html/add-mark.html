@@ -1,0 +1,14 @@
+{{define "content"}}
+  {{if .Error}}
+  <p>Error : {{.Error}}</p>
+  {{else}}
+    <form style="display:grid; justify-self:center; align-self:center;align-text:center"
+      method="POST" action="/mark/add" 
+    > 
+    <input required type="number" name="ID" placeholder="student id"/> 
+    <input required type="text" name="Name" placeholder="student name "/> 
+    <input required type="number" name="mark" placeholder="mark">
+    <input type="submit" name="Submit" value="Submit" /> 
+    </form>
+  {{end}}
+{{end}}

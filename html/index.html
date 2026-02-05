@@ -1,42 +1,20 @@
-<!DOCTYPE html>
+{{define "index"}}
+<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ .title}}</title>
-    <link href="css/style.css" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{.title}}</title>
+    <link href="/static/style.css" rel="stylesheet" />
   </head>
   <body>
+    <nav>
+      <a href="/mark/login">Login</a>
+      <a href="/mark/add">Add Mark</a>
+      <a href="/mark/show">Show Mark</a>
+    </nav>
 
-    {{if .authorized}}
-    <form style="display:grid; justify-self:center; align-self:center;align-text:center"> 
-    <input type="number" name="ID" placeholder="student id"/> 
-    <input type="text" name="Name" placeholder="student name "/> 
-    <input type="number" name="mark" placeholder="mark">
-    <input type="submit" name="Submit" value="Submit" /> 
-    </form>
-
-    <table border=3 style="display:grid; justify-self:center; align-self:center;">
-      <tr>
-        <td>Name</td>
-        <td>Id</td>
-        <td>mark</td>
-      </tr>
-    {{ range .students}}
-    <tr>
-      <td>{{.Name}}</td>
-      <td>{{.ID}}</td>
-    <td>{{.Mark}}</td>
-      </tr>
-    {{end}}
-    </table>
-    {{else }}
-  <h1>login</h1>
-    <form style="display:grid; justify-self:center; align-self:center;align-text:center"> 
-    <input type="text" name="email" placeholder="user email"/> 
-    <input type="password" name="password" placeholder="password">
-    <input type="submit" name="login" value="Submit" /> 
-    </form>
-    {{end}}
+    {{template "content" .}}
   </body>
 </html>
+{{end}}

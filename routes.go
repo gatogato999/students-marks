@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
 )
@@ -11,11 +12,16 @@ type Student struct {
 	Mark float32
 }
 
-func HomeHanlder(res http.ResponseWriter, req *http.Request) {
-	tmpl := template.Must(template.ParseFiles("html/index.html"))
+func InsertMarkHandler(res http.ResponseWriter, req *http.Request) {
+	tmpl := template.Must(template.ParseFiles("html/index.html", "html/add-mark.html"))
+	if err := tmpl.ExecuteTemplate(res, "index", nil); err != nil {
+		Check(err)
+	}
+}
 
+func ShowMarkHandler(res http.ResponseWriter, req *http.Request) {
+	tmpl := template.Must(template.ParseFiles("html/index.html", "html/show-mark.html"))
 	data := map[string]any{
-		"title":      "this my title",
 		"authorized": true,
 		"students": []Student{
 			{ID: 938, Name: "Mohmamad", Mark: 2.3},
@@ -25,8 +31,25 @@ func HomeHanlder(res http.ResponseWriter, req *http.Request) {
 			{ID: 238, Name: "mark", Mark: 7.3},
 		},
 	}
-
-	if err := tmpl.Execute(res, data); err != nil {
+	if err := tmpl.ExecuteTemplate(res, "index", data); err != nil {
 		Check(err)
 	}
+}
+
+func LoginPage(res http.ResponseWriter, req *http.Request) {
+	tmpl := template.Must(template.ParseFiles("html/index.html", "html/login.html"))
+	if err := tmpl.ExecuteTemplate(res, "index", nil); err != nil {
+		Check(err)
+	}
+}
+
+func LoginHandler(res http.ResponseWriter, req *http.Request) {
+	req.ParseForm()
+	email := req.FormValue("email")
+	password := req.FormValue("password")
+
+	fmt.Println(email)
+	fmt.Println(password)
+
+	http.Redirect(res, req, "/l", http.StatusSeeOther)
 }
