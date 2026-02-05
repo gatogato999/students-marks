@@ -1,15 +1,20 @@
-{{define "content"}}
-{{if .Error}}
+{{define "content"}} {{if .Error}}
 <p>Error : {{.Error}}</p>
 {{else}}
-  <h1>login</h1>
+<h1>login</h1>
 
-    <form style="display:grid; justify-self:center; align-self:center;align-text:center"
-      method="POST" action="/mark/auth" 
-    > 
-    <input required type="text" name="email" placeholder="user email"/> 
-    <input required type="password" name="password" placeholder="password">
-    <input type="submit" name="login" value="Submit" /> 
-    </form>
-  {{end}}
-{{end}}
+<form
+  style="
+    display: grid;
+    justify-self: center;
+    align-self: center;
+    align-text: center;
+  "
+  method="POST"
+  action="/mark/auth"
+>
+  <input required type="text" name="email" placeholder="user email" />
+  <input required type="password" name="password" placeholder="password" />
+  <input type="submit" name="login" value="Submit" />
+</form>
+{{end}} {{end}}

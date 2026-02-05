@@ -12,11 +12,24 @@ type Student struct {
 	Mark float32
 }
 
-func InsertMarkHandler(res http.ResponseWriter, req *http.Request) {
+func InsertingPage(res http.ResponseWriter, req *http.Request) {
 	tmpl := template.Must(template.ParseFiles("html/index.html", "html/add-mark.html"))
 	if err := tmpl.ExecuteTemplate(res, "index", nil); err != nil {
 		Check(err)
 	}
+}
+
+func InsertMarkHandler(res http.ResponseWriter, req *http.Request) {
+	req.ParseForm()
+	id := req.FormValue("ID")
+	name := req.FormValue("Name")
+	mark := req.FormValue("Mark")
+
+	fmt.Println("-----------------")
+	fmt.Println(id)
+	fmt.Println(name)
+	fmt.Println(mark)
+	fmt.Println("-----------------")
 }
 
 func ShowMarkHandler(res http.ResponseWriter, req *http.Request) {
@@ -48,8 +61,8 @@ func LoginHandler(res http.ResponseWriter, req *http.Request) {
 	email := req.FormValue("email")
 	password := req.FormValue("password")
 
+	fmt.Println("-----------------")
 	fmt.Println(email)
 	fmt.Println(password)
-
-	http.Redirect(res, req, "/l", http.StatusSeeOther)
+	fmt.Println("-----------------")
 }
