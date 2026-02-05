@@ -28,25 +28,28 @@ func InsertMarkHandler(db *sql.DB) http.HandlerFunc {
 		update := req.FormValue("forUpdate")
 		id64, err := strconv.ParseInt(id, 10, 64)
 		if err != nil {
-			log.Fatal(err)
-			http.Error(res, "invalid id", http.StatusBadRequest)
+			log.Println(err)
 			return
 		}
 		mark32, err := strconv.ParseFloat(mark, 32)
 		if err != nil {
-			log.Fatal(err)
-			http.Error(res, "invalid id", http.StatusBadRequest)
+			log.Println(err)
 			return
 		}
 		if update == "on" {
-			UpdateStudent(db, id64, name, float32(mark32))
+			err = UpdateStudent(db, id64, name, float32(mark32))
+			if err != nil {
+				log.Println(err)
+				return
+			}
+			return
 		} else {
 			err = InsertStudent(db, id64, name, float32(mark32))
 			if err != nil {
-				log.Fatal(err)
-				http.Error(res, "couldn't insert the record", http.StatusBadRequest)
+				log.Println(err)
 				return
 			}
+			return
 		}
 	}
 }
@@ -54,15 +57,14 @@ func InsertMarkHandler(db *sql.DB) http.HandlerFunc {
 func ShowMarkHandler(db *sql.DB) http.HandlerFunc {
 	return func(res http.ResponseWriter, req *http.Request) {
 		tmpl := template.Must(template.ParseFiles("html/index.html", "html/show-mark.html"))
+		record, err := GetAllStudents(db)
+		if err != nil {
+			log.Println(err)
+			return
+		}
 		data := map[string]any{
-			"title": "Show Results",
-			"students": []Student{
-				{ID: 938, Name: "Mohmamad", Mark: 2.3},
-				{ID: 2938, Name: "ali", Mark: 5.3},
-				{ID: 298, Name: "omer", Mark: 9.3},
-				{ID: 293, Name: "hassan", Mark: 2.3},
-				{ID: 238, Name: "mark", Mark: 7.3},
-			},
+			"title":    "Show Results",
+			"students": record,
 		}
 		if err := tmpl.ExecuteTemplate(res, "index", data); err != nil {
 			Check(err)

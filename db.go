@@ -55,7 +55,7 @@ func GainAccessToDB() (*sql.DB, error) {
 func CreateTables(db *sql.DB) error {
 	tx, err := db.Begin()
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	_, err = tx.Exec(`
 	CREATE TABLE IF NOT EXISTS users
@@ -84,7 +84,7 @@ func CreateTables(db *sql.DB) error {
 	}
 
 	if err := tx.Commit(); err != nil {
-		log.Fatal(err)
+		log.Println(err)
 	}
 	return nil
 }
@@ -141,7 +141,7 @@ func UpdateStudent(db *sql.DB, id int64, name string, mark float32) error {
 	return nil
 }
 
-func GetAllStudents(db *sql.DB, id int) ([]Student, error) {
+func GetAllStudents(db *sql.DB) ([]Student, error) {
 	rows, err := db.Query(`select * from students `)
 	if err != nil {
 		return []Student{}, err
