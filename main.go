@@ -12,6 +12,15 @@ func Check(err error) {
 }
 
 func main() {
+	db, err := GainAccessToDB()
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer db.Close()
+	err = CreateTables(db)
+	if err != nil {
+		log.Fatal(err)
+	}
 	mux := http.NewServeMux()
 
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))

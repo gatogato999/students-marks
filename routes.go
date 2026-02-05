@@ -6,12 +6,6 @@ import (
 	"net/http"
 )
 
-type Student struct {
-	ID   int64
-	Name string
-	Mark float32
-}
-
 func InsertingPage(res http.ResponseWriter, req *http.Request) {
 	tmpl := template.Must(template.ParseFiles("html/index.html", "html/add-mark.html"))
 	data := map[string]any{
@@ -27,11 +21,18 @@ func InsertMarkHandler(res http.ResponseWriter, req *http.Request) {
 	id := req.FormValue("ID")
 	name := req.FormValue("Name")
 	mark := req.FormValue("Mark")
+	update := req.FormValue("forUpdate")
 
 	fmt.Println("-----------------")
 	fmt.Println(id)
 	fmt.Println(name)
 	fmt.Println(mark)
+	fmt.Println(update)
+	if update == "on" {
+		fmt.Println(true)
+	} else {
+		fmt.Println(false)
+	}
 	fmt.Println("-----------------")
 }
 
