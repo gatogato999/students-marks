@@ -89,7 +89,7 @@ func CreateTables(db *sql.DB) error {
 	return nil
 }
 
-func CreateUser(db *sql.DB, name string, email string, password string) error {
+func createUser(db *sql.DB, name string, email string, password string) error {
 	insertionResult, err := db.Exec(`
 	INSERT INTO users ( name, email, password) VALUES (?, ?, ?  );
 	`, name, email, password)
@@ -123,7 +123,7 @@ func InsertStudent(db *sql.DB, id int64, name string, mark float32) error {
 	return nil
 }
 
-func UpdateStudent(db *sql.DB, id float32, name string, mark float32) error {
+func UpdateStudent(db *sql.DB, id int64, name string, mark float32) error {
 	insertionResult, err := db.Exec(`
 	UPDATE students SET  name = ?, mark = ?
 	WHERE id = ?
