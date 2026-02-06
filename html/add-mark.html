@@ -1,6 +1,18 @@
-{{define "content"}} {{if .Error}}
-<p>Error : {{.Error}}</p>
-{{else}}
+{{define "content"}}
+<!--  -->
+{{if .username}}
+<p>loged as : {{.username}}</p>
+{{end}}
+
+<!--  -->
+{{if .error}}
+<p>Error : {{.error}}</p>
+{{end}}
+<!--  -->
+{{if .msg}}
+<p>Message : {{.msg}}</p>
+{{end}}
+<!--  -->
 <form
   style="
     display: grid;
@@ -18,4 +30,5 @@
   ><input type="checkbox" name="forUpdate" />
   <input type="submit" name="Submit" value="Submit" />
 </form>
-{{end}} {{end}}
+
+{{end}}

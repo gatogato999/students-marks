@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -89,7 +90,7 @@ func CreateTables(db *sql.DB) error {
 	return nil
 }
 
-func createUser(db *sql.DB, name string, email string, password string) error {
+func createUser(db *sql.DB, name, email, password string) error {
 	insertionResult, err := db.Exec(`
 	INSERT INTO users ( name, email, password) VALUES (?, ?, ?  );
 	`, name, email, password)
@@ -104,6 +105,27 @@ func createUser(db *sql.DB, name string, email string, password string) error {
 		log.Printf("expected to affect 1 row, affected %d", rows)
 	}
 	return nil
+}
+
+func UserExists(db *sql.DB, email, password string) (bool, error) {
+	if email == "" || password == "" {
+		err := errors.New("empty email or password")
+		return false, err
+	}
+
+	var hPass string
+
+	err := db.QueryRow(`select password from users where email = ?  LIMIT 1;`,
+		email).Scan(&hPass)
+	if err != nil {
+		return false, err
+	}
+
+	if CheckPasswordHash(password, hPass) {
+		return true, nil
+	} else {
+		return false, nil
+	}
 }
 
 func InsertStudent(db *sql.DB, id int64, name string, mark float32) error {

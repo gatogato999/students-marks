@@ -1,20 +1,32 @@
 {{define "content"}}
-  {{if .Error}}
-  <p>Error : {{.Error}}</p>
-  {{else}}
-      <table border=3 style="display:grid; justify-self:center; align-self:center;">
-        <tr>
-          <td>Name</td>
-          <td>Id</td>
-          <td>mark</td>
-        </tr>
-      {{ range .students}}
-      <tr>
-        <td>{{.Name}}</td>
-        <td>{{.ID}}</td>
-      <td>{{.Mark}}</td>
-        </tr>
-      {{end}}
-      </table>
+
+<!--  -->
+{{if .username}}
+<p>loged as : {{.username}}</p>
+{{end}}
+
+<!--  -->
+{{if .error}}
+<p>Error : {{.error}}</p>
+{{end}}
+<!--  -->
+
+<table
+  border="3"
+  style="display: grid; justify-self: center; align-self: center"
+>
+  <tr>
+    <td>Id</td>
+    <td>Name</td>
+    <td>mark</td>
+  </tr>
+  {{ range .students}}
+  <tr>
+    <td>{{.ID}}</td>
+    <td>{{.Name}}</td>
+    <td>{{.Mark}}</td>
+  </tr>
   {{end}}
+</table>
+
 {{end}}
