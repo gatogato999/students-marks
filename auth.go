@@ -15,6 +15,38 @@ import (
 
 func Protected(next http.HandlerFunc) http.HandlerFunc {
 	return func(res http.ResponseWriter, req *http.Request) {
+		cookie, err := req.Cookie("jwt_token")
+		if err != nil {
+			if err == http.ErrNoCookie {
+				http.Redirect(
+					res,
+					req,
+					"/mark/login?error=You are not authorized login first",
+					http.StatusSeeOther,
+				)
+				return
+			} else {
+				http.Redirect(
+					res,
+					req,
+					"/mark/login?error=You are not authorized login first",
+					http.StatusSeeOther,
+				)
+				return
+			}
+		}
+
+		token := cookie.Value
+
+		if _, err := verifyJwt(token); err != nil {
+			http.Redirect(
+				res,
+				req,
+				"/mark/login?error=You are not authorized login first",
+				http.StatusSeeOther,
+			)
+			return
+		}
 		next(res, req)
 	}
 }
@@ -59,8 +91,8 @@ func LoginHandler(db *sql.DB) http.HandlerFunc {
 				Name:     "jwt_token",
 				Value:    token,
 				Path:     "/",
-				Expires:  time.Now().Add(15 * time.Minute),
-				Secure:   false,
+				Expires:  time.Now().Add(1 * time.Minute),
+				Secure:   true,
 				HttpOnly: true,
 				SameSite: http.SameSiteLaxMode,
 			}
@@ -85,7 +117,7 @@ func createJwt(email string, secret []byte) (string, error) {
 		"sub":   email,
 		"email": email,
 		"iat":   time.Now().Unix(),
-		"exp":   time.Now().Add(15 * time.Minute).Unix(),
+		"exp":   time.Now().Add(1 * time.Minute).Unix(),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(secret)

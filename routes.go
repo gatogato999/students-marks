@@ -18,9 +18,22 @@ func InsertingPage(res http.ResponseWriter, req *http.Request) {
 	returnedError := req.FormValue("error")
 	msg := req.FormValue("msg")
 	tmpl := template.Must(template.ParseFiles("html/index.html", "html/add-mark.html"))
+
+	cookie, err := req.Cookie("jwt_token")
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	token := cookie.Value
+	claims, err := verifyJwt(token)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
 	data := map[string]any{
 		"title":    "Inserting Marks Page",
-		"username": "default",
+		"username": claims.Subject,
 		"msg":      msg,
 		"error":    returnedError,
 	}
@@ -100,10 +113,23 @@ func ShowMarkHandler(db *sql.DB) http.HandlerFunc {
 			log.Println(err)
 			return
 		}
+
+		cookie, err := req.Cookie("jwt_token")
+		if err != nil {
+			log.Println(err)
+			return
+		}
+		token := cookie.Value
+		claims, err := verifyJwt(token)
+		if err != nil {
+			log.Println(err)
+			return
+		}
+
 		data := map[string]any{
 			"title":    "Show Results",
 			"students": record,
-			"username": "default",
+			"username": claims.Subject,
 		}
 		if err := tmpl.ExecuteTemplate(res, "index", data); err != nil {
 			Check(err)
@@ -121,10 +147,10 @@ func LoginPage(res http.ResponseWriter, req *http.Request) {
 
 	returnedError := req.FormValue("error")
 	tmpl := template.Must(template.ParseFiles("html/index.html", "html/login.html"))
+
 	data := map[string]any{
-		"title":    "Login Page",
-		"error":    returnedError,
-		"username": "default",
+		"title": "Login Page",
+		"error": returnedError,
 	}
 	if err := tmpl.ExecuteTemplate(res, "index", data); err != nil {
 		Check(err)

@@ -27,12 +27,12 @@ func main() {
 
 	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
-	mux.HandleFunc("/mark/add", InsertingPage)
-	mux.HandleFunc("POST /mark/insert", InsertMarkHandler(db))
+	mux.HandleFunc("GET /mark/add", Protected(InsertingPage))
+	mux.HandleFunc("POST /mark/insert", Protected(InsertMarkHandler(db)))
 
-	mux.HandleFunc("/mark/show", ShowMarkHandler(db))
+	mux.HandleFunc("GET /mark/show", Protected(ShowMarkHandler(db)))
 
-	mux.HandleFunc("/mark/login", LoginPage)
+	mux.HandleFunc("GET /mark/login", LoginPage)
 	mux.HandleFunc("POST /mark/auth", LoginHandler(db))
 
 	if err := http.ListenAndServe(":10055", mux); err != nil {
