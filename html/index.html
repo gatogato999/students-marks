@@ -12,13 +12,18 @@
       <!--  -->
       {{if .username}}
       <h3>User : {{.username}}</h3>
+      <form method="POST" action="/mark/logout">
+        <input type="submit" name="Logout" value="Logout" />
+      </form>
       {{else}}
       <h3>- - - - - -</h3>
       {{end}}
       <nav>
-        <a href="/mark/login">Login</a>
         <a href="/mark/add">Add Mark</a>
         <a href="/mark/show">Show Mark</a>
+        {{if .username}} {{else}}
+        <a href="/mark/login">Login</a>
+        {{end}}
       </nav>
     </header>
 

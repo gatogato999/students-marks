@@ -156,3 +156,21 @@ func LoginPage(res http.ResponseWriter, req *http.Request) {
 		Check(err)
 	}
 }
+
+func LogOutHandler(res http.ResponseWriter, req *http.Request) {
+	http.SetCookie(res, &http.Cookie{
+		Name:     "jwt_token",
+		Value:    "",
+		Path:     "/",
+		MaxAge:   -1,
+		Secure:   true,
+		HttpOnly: true,
+		SameSite: http.SameSiteLaxMode,
+	})
+	http.Redirect(
+		res,
+		req,
+		"/mark/login?error=you logged out",
+		http.StatusSeeOther,
+	)
+}

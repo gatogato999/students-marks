@@ -35,6 +35,8 @@ func main() {
 	mux.HandleFunc("GET /mark/login", LoginPage)
 	mux.HandleFunc("POST /mark/auth", LoginHandler(db))
 
+	mux.HandleFunc("POST /mark/logout", Protected(LogOutHandler))
+
 	if err := http.ListenAndServe(":10055", mux); err != nil {
 		panic(err)
 	}

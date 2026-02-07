@@ -1,22 +1,19 @@
 # Students Marks Web App
 
-## Usage 
+## Usage
 
-- login 
-- Fill the form correctly to enter the mark of a student
-- see the inserted/modified update
+- /login : using email, password
+- /add : enter a student record (id, name, mark, "checkbox": update if exists)
+- /show : see the inserted/modified update
+- /logout : revoke the authorization
 
-## Constrains
+## external packages used
 
-- Use go's template/HTML builtin package
-- port 10055
+- github.com/go-sql-driver/mysql v1.9.3
+- github.com/golang-jwt/jwt/v5 v5.3.1
+- github.com/joho/godotenv v1.5.1
+- golang.org/x/crypto v0.47.0
 
-## To Consider
+## Need More Work
 
-- [ ] POST /mark/add route
-  * [ ] Form : studentId, StudentName, Mark, Submit
-
-- [ ] POST /mark/auth route
-  * [ ] Form : email, password
-
-- [ ] GET /mark/show route
+- [ ] the fronend
