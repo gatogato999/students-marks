@@ -8,6 +8,7 @@
 *.so
 *.dylib
 students-marks
+/students-marks
 ./students-marks
 
 # Test binary, built with `go test -c`
