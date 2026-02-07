@@ -1,8 +1,4 @@
 {{define "content"}}
-<!--  -->
-{{if .username}}
-<p>loged as : {{.username}}</p>
-{{end}}
 
 <!--  -->
 {{if .error}}
@@ -10,19 +6,10 @@
 {{end}}
 <!--  -->
 {{if .msg}}
-<p>Message : {{.msg}}</p>
+<h4>Message : {{.msg}}</h4>
 {{end}}
 <!--  -->
-<form
-  style="
-    display: grid;
-    justify-self: center;
-    align-self: center;
-    align-text: center;
-  "
-  method="POST"
-  action="/mark/insert"
->
+<form method="POST" action="/mark/insert">
   <input required type="number" name="ID" placeholder="student id" />
   <input required type="text" name="Name" placeholder="student name " />
   <input required type="number" name="Mark" placeholder="mark" />

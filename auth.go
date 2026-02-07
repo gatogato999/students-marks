@@ -91,7 +91,7 @@ func LoginHandler(db *sql.DB) http.HandlerFunc {
 				Name:     "jwt_token",
 				Value:    token,
 				Path:     "/",
-				Expires:  time.Now().Add(1 * time.Minute),
+				Expires:  time.Now().Add(7 * time.Minute),
 				Secure:   true,
 				HttpOnly: true,
 				SameSite: http.SameSiteLaxMode,
@@ -117,7 +117,7 @@ func createJwt(email string, secret []byte) (string, error) {
 		"sub":   email,
 		"email": email,
 		"iat":   time.Now().Unix(),
-		"exp":   time.Now().Add(1 * time.Minute).Unix(),
+		"exp":   time.Now().Add(7 * time.Minute).Unix(),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(secret)

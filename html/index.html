@@ -8,14 +8,21 @@
     <link href="/static/style.css" rel="stylesheet" />
   </head>
   <body>
-    <nav>
-      <a href="/mark/login">Login</a>
-      <a href="/mark/add">Add Mark</a>
-      <a href="/mark/show">Show Mark</a>
-    </nav>
+    <header>
+      <!--  -->
+      {{if .username}}
+      <h3>User : {{.username}}</h3>
+      {{else}}
+      <h3>- - - - - -</h3>
+      {{end}}
+      <nav>
+        <a href="/mark/login">Login</a>
+        <a href="/mark/add">Add Mark</a>
+        <a href="/mark/show">Show Mark</a>
+      </nav>
+    </header>
 
-    {{template "content" .}}
+    <main>{{template "content" .}}</main>
   </body>
-  <script src="/static/main.js"></script>
 </html>
 {{end}}

@@ -1,21 +1,12 @@
 {{define "content"}}
-<h1>login</h1>
+<h3>login</h3>
 
 <!--  -->
 {{if .error}}
 <p>Error : {{.error}}</p>
 {{end}}
 <!--  -->
-<form
-  style="
-    display: grid;
-    justify-self: center;
-    align-self: center;
-    align-text: center;
-  "
-  method="POST"
-  action="/mark/auth"
->
+<form method="POST" action="/mark/auth">
   <input required type="text" name="email" placeholder="user email" />
   <input required type="password" name="password" placeholder="password" />
   <input type="submit" name="login" value="Submit" />

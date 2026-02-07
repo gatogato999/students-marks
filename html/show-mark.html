@@ -1,20 +1,12 @@
 {{define "content"}}
 
 <!--  -->
-{{if .username}}
-<p>loged as : {{.username}}</p>
-{{end}}
-
-<!--  -->
 {{if .error}}
 <p>Error : {{.error}}</p>
 {{end}}
 <!--  -->
 
-<table
-  border="3"
-  style="display: grid; justify-self: center; align-self: center"
->
+<table border="3">
   <tr>
     <td>Id</td>
     <td>Name</td>
