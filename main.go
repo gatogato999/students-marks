@@ -25,7 +25,10 @@ func main() {
 
 	mux := http.NewServeMux()
 
-	mux.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	mux.Handle(
+		"/mark/static/",
+		http.StripPrefix("/mark/static/", http.FileServer(http.Dir("static"))),
+	)
 
 	mux.HandleFunc("GET /mark/add", Protected(InsertingPage))
 	mux.HandleFunc("POST /mark/insert", Protected(InsertMarkHandler(db)))
