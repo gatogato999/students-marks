@@ -26,19 +26,19 @@ func main() {
 	mux := http.NewServeMux()
 
 	mux.Handle(
-		"/mark/static/",
-		http.StripPrefix("/mark/static/", http.FileServer(http.Dir("static"))),
+		"/marks/static/",
+		http.StripPrefix("/marks/static/", http.FileServer(http.Dir("static"))),
 	)
 
-	mux.HandleFunc("GET /mark/add", Protected(InsertingPage))
-	mux.HandleFunc("POST /mark/insert", Protected(InsertMarkHandler(db)))
+	mux.HandleFunc("GET /marks/add", Protected(InsertingPage))
+	mux.HandleFunc("POST /marks/insert", Protected(InsertMarkHandler(db)))
 
-	mux.HandleFunc("GET /mark/show", Protected(ShowMarkHandler(db)))
+	mux.HandleFunc("GET /marks/show", Protected(ShowMarkHandler(db)))
 
-	mux.HandleFunc("GET /mark/login", LoginPage)
-	mux.HandleFunc("POST /mark/auth", LoginHandler(db))
+	mux.HandleFunc("GET /marks/login", LoginPage)
+	mux.HandleFunc("POST /marks/auth", LoginHandler(db))
 
-	mux.HandleFunc("POST /mark/logout", Protected(LogOutHandler))
+	mux.HandleFunc("POST /marks/logout", Protected(LogOutHandler))
 
 	if err := http.ListenAndServe(":10055", mux); err != nil {
 		panic(err)

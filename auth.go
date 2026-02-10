@@ -21,7 +21,7 @@ func Protected(next http.HandlerFunc) http.HandlerFunc {
 				http.Redirect(
 					res,
 					req,
-					"/mark/login?error=You are not authorized login first",
+					"login?error=You are not authorized login first",
 					http.StatusSeeOther,
 				)
 				return
@@ -29,7 +29,7 @@ func Protected(next http.HandlerFunc) http.HandlerFunc {
 				http.Redirect(
 					res,
 					req,
-					"/mark/login?error=You are not authorized login first",
+					"login?error=You are not authorized login first",
 					http.StatusSeeOther,
 				)
 				return
@@ -42,7 +42,7 @@ func Protected(next http.HandlerFunc) http.HandlerFunc {
 			http.Redirect(
 				res,
 				req,
-				"/mark/login?error=You are not authorized login first",
+				"login?error=You are not authorized login first",
 				http.StatusSeeOther,
 			)
 			return
@@ -64,7 +64,7 @@ func LoginHandler(db *sql.DB) http.HandlerFunc {
 			http.Redirect(
 				res,
 				req,
-				"/mark/login?error=invalid credintials",
+				"login?error=invalid credintials",
 				http.StatusSeeOther,
 			)
 			return
@@ -81,7 +81,7 @@ func LoginHandler(db *sql.DB) http.HandlerFunc {
 				http.Redirect(
 					res,
 					req,
-					"/mark/login?error=internal server error",
+					"login?error=internal server error",
 					http.StatusSeeOther,
 				)
 				return
@@ -98,10 +98,10 @@ func LoginHandler(db *sql.DB) http.HandlerFunc {
 			}
 
 			http.SetCookie(res, &cookie)
-			http.Redirect(res, req, "/mark/add", http.StatusSeeOther)
+			http.Redirect(res, req, "add", http.StatusSeeOther)
 			return
 		} else {
-			http.Redirect(res, req, "/mark/login?error=invalid credintials", http.StatusSeeOther)
+			http.Redirect(res, req, "login?error=invalid credintials", http.StatusSeeOther)
 			return
 		}
 	}

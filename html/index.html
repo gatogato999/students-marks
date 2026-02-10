@@ -5,24 +5,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{{.title}}</title>
-    <link href="/mark/static/style.css" rel="stylesheet" />
+    <link href="static/style.css" rel="stylesheet" />
   </head>
   <body>
     <header>
       <!--  -->
       {{if .username}}
       <h3>User : {{.username}}</h3>
-      <form method="POST" action="/mark/logout">
+      <form method="POST" action="logout">
         <input type="submit" name="Logout" value="Logout" />
       </form>
       {{else}}
       <h3>- - - - - -</h3>
       {{end}}
       <nav>
-        <a href="/mark/add">Add Mark</a>
-        <a href="/mark/show">Show Mark</a>
+        <a href="add">Add Mark</a>
+        <a href="show">Show Mark</a>
         {{if .username}} {{else}}
-        <a href="/mark/login">Login</a>
+        <a href="login">Login</a>
         {{end}}
       </nav>
     </header>

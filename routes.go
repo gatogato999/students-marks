@@ -57,26 +57,26 @@ func InsertMarkHandler(db *sql.DB) http.HandlerFunc {
 		id64, err := strconv.ParseInt(id, 10, 64)
 		if err != nil {
 			log.Println(err)
-			redirect := fmt.Sprint("/mark/add?error=", err)
+			redirect := fmt.Sprint("add?error=", err)
 			http.Redirect(res, req, redirect, http.StatusSeeOther)
 			return
 		}
 		mark32, err := strconv.ParseFloat(mark, 32)
 		if err != nil {
 			log.Println(err)
-			redirect := fmt.Sprint("/mark/add?error=", err)
+			redirect := fmt.Sprint("add?error=", err)
 			http.Redirect(res, req, redirect, http.StatusSeeOther)
 			return
 		}
 
 		if id64 < 1 {
-			redirect := fmt.Sprint("/mark/add?error=", "the id can't be less that 1")
+			redirect := fmt.Sprint("add?error=", "the id can't be less that 1")
 			http.Redirect(res, req, redirect, http.StatusSeeOther)
 			return
 		}
 
 		if mark32 < 0 || mark32 > 100.00 {
-			redirect := fmt.Sprint("/mark/add?error=", "invalid mark value (0 <= mark <= 100.00 )")
+			redirect := fmt.Sprint("add?error=", "invalid mark value (0 <= mark <= 100.00 )")
 			http.Redirect(res, req, redirect, http.StatusSeeOther)
 			return
 		}
@@ -85,21 +85,21 @@ func InsertMarkHandler(db *sql.DB) http.HandlerFunc {
 			err = UpdateStudent(db, id64, name, float32(mark32))
 			if err != nil {
 				log.Println(err)
-				redirect := fmt.Sprint("/mark/add?error=", "update fail")
+				redirect := fmt.Sprint("add?error=", "update fail")
 				http.Redirect(res, req, redirect, http.StatusSeeOther)
 				return
 			}
-			http.Redirect(res, req, "/mark/add?msg= successful update", http.StatusSeeOther)
+			http.Redirect(res, req, "add?msg= successful update", http.StatusSeeOther)
 			return
 		} else {
 			err = InsertStudent(db, id64, name, float32(mark32))
 			if err != nil {
 				log.Println(err)
-				redirect := fmt.Sprint("/mark/add?error=", "insertion fail")
+				redirect := fmt.Sprint("add?error=", "insertion fail")
 				http.Redirect(res, req, redirect, http.StatusSeeOther)
 				return
 			}
-			http.Redirect(res, req, "/mark/add?msg=a new record created", http.StatusSeeOther)
+			http.Redirect(res, req, "add?msg=a new record created", http.StatusSeeOther)
 			return
 		}
 	}
@@ -133,7 +133,7 @@ func ShowMarkHandler(db *sql.DB) http.HandlerFunc {
 		}
 		if err := tmpl.ExecuteTemplate(res, "index", data); err != nil {
 			Check(err)
-			http.Redirect(res, req, "/mark/show", http.StatusSeeOther)
+			http.Redirect(res, req, "show", http.StatusSeeOther)
 		}
 	}
 }
@@ -170,7 +170,7 @@ func LogOutHandler(res http.ResponseWriter, req *http.Request) {
 	http.Redirect(
 		res,
 		req,
-		"/mark/login?error=you logged out",
+		"login?error=you logged out",
 		http.StatusSeeOther,
 	)
 }
